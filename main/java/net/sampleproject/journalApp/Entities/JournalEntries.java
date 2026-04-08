@@ -1,4 +1,4 @@
-package net.engineeringdigest.journalApp.Entities;
+package net.sampleproject.journalApp.Entities;
 
 import lombok.*;
 import org.bson.types.ObjectId;

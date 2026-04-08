@@ -1,9 +1,9 @@
-package net.engineeringdigest.journalApp.Controller;
+package net.sampleproject.journalApp.Controller;
 
-import net.engineeringdigest.journalApp.Entities.JournalEntries;
-import net.engineeringdigest.journalApp.Entities.User;
-import net.engineeringdigest.journalApp.services.JournalService;
-import net.engineeringdigest.journalApp.services.UserService;
+import net.sampleproject.journalApp.Entities.JournalEntries;
+import net.sampleproject.journalApp.Entities.User;
+import net.sampleproject.journalApp.services.JournalService;
+import net.sampleproject.journalApp.services.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
