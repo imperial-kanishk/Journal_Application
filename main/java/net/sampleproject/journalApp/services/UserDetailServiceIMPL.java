@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class UserDetailServiceIMP implements UserDetailsService {
+public class UserDetailServiceIMPL implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;

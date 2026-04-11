@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
-public interface Journal_Repository extends MongoRepository<JournalEntries, ObjectId> //TypeOfData,ID format
+public interface JournalRepository extends MongoRepository<JournalEntries, ObjectId> //TypeOfData,ID format
 {
 }
 //Inheritance through extend keyword

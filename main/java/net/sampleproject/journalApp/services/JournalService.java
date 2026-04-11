@@ -2,7 +2,7 @@ package net.sampleproject.journalApp.services;
 
 import net.sampleproject.journalApp.Entities.JournalEntries;
 import net.sampleproject.journalApp.Entities.User;
-import net.sampleproject.journalApp.Repository.Journal_Repository;
+import net.sampleproject.journalApp.Repository.JournalRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class JournalService {
 
     @Autowired
-    private Journal_Repository journalRepo;
+    private JournalRepository journalRepo;
     @Autowired
     private UserService userService;
 
@@ -30,7 +30,7 @@ public class JournalService {
             JournalEntries save = journalRepo.save(journalEntry); //New Saved Journal entry
             user.getJournalEntriesList().add(save); //Save to list of journal entries of the User
             //user.setUsername(null);
-            userService.SaveEntry(user); //To Save the updated User
+            userService.saveUser(user); //To Save the updated User
 
         } catch (Exception e) {
             throw new RuntimeException("An error occurred while saving ");

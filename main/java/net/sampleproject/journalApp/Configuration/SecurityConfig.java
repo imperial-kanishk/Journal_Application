@@ -1,6 +1,6 @@
 package net.sampleproject.journalApp.Configuration;
 
-import net.sampleproject.journalApp.services.UserDetailServiceIMP;
+import net.sampleproject.journalApp.services.UserDetailServiceIMPL;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,9 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserDetailServiceIMP userDetailsService;
+    private final UserDetailServiceIMPL userDetailsService;
 
-    public SecurityConfig(UserDetailServiceIMP userDetailsService) {
+    public SecurityConfig(UserDetailServiceIMPL userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -26,6 +26,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/journal/**", "/user/**").authenticated()
                         .anyRequest().authenticated()
                 ).userDetailsService(userDetailsService)
