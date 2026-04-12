@@ -26,7 +26,7 @@ public class UserDetailServiceIMPL implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                authorities(
+                .authorities(
                         user.getRoles().stream()
                                 .map(role -> "ROLE_" + role)
                                 .toList()

@@ -42,7 +42,7 @@ public class UserController {
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
-        userRepository.deleteByUserId(userName);
+        userRepository.deleteByUserId(user.getUserId());
 
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

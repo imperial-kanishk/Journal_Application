@@ -58,7 +58,7 @@ public class JournalService {
         User user = userService.findByUserName(userName); //User summoned so the entry can be deleted
         user.getJournalEntriesList().removeIf(x -> x.getId().equals(id));
         journalRepo.deleteById(id);
-        userService.SaveEntry(user); //User modified
+        userService.saveUser(user); //User modified
     }
 
 }
