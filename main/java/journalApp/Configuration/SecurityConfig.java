@@ -1,6 +1,7 @@
 package journalApp.Configuration;
 
-import net.sampleproject.journalApp.services.UserDetailServiceIMPL;
+
+import journalApp.services.UserDetailServiceIMPL;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
