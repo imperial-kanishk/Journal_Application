@@ -15,8 +15,7 @@ public class JournalApplication {
 
     public static void main(String[] args) {
 
-        System.out.println("USERNAME: " + System.getenv("MONGO_USERNAME"));
-        System.out.println("PASSWORD: " + System.getenv("MONGO_PASSWORD"));
+
 
         SpringApplication.run(JournalApplication.class, args);
     }
