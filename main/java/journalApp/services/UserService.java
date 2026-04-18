@@ -25,7 +25,7 @@ public class UserService {
         this.userrepo = userrepo;
         this.passwordEncoder = passwordEncoder;
     }
-    @Transactional
+
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
