@@ -15,11 +15,10 @@ public class JournalApplication {
 
     public static void main(String[] args) {
 
-
         SpringApplication.run(JournalApplication.class, args);
     }
 
-    @Bean //Like a Translator between MongoDB and Spring Boot
+    @Bean //Like a Translator between MongoDB database and Spring Boot
     public PlatformTransactionManager add(MongoDatabaseFactory dbFactory){
         return new MongoTransactionManager((dbFactory));
     }
