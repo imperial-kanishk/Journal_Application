@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class JournalEntries {
     @Id
-    private ObjectId id;
+    private String id;
     @NonNull
     @NotBlank
     private String title;
@@ -23,7 +23,7 @@ public class JournalEntries {
     private String content;
     private LocalDateTime date;
 
-    public JournalEntries(LocalDateTime date, String content, String title, ObjectId id) {
+    public JournalEntries(LocalDateTime date, String content, String title, String id) {
         this.date = date;
         this.content = content;
         this.title = title;

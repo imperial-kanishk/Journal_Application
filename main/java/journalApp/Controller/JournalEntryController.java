@@ -67,16 +67,16 @@ public class JournalEntryController {
 //        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //    }
 
-    @DeleteMapping("/id/{userName}/{myId}")
-    public ResponseEntity<?> delete(@PathVariable ObjectId myId,Authentication authentication){
+    @DeleteMapping("/id/{myId}")
+    public ResponseEntity<?> deleteEntry(@PathVariable String myId, Authentication authentication) {
         String userName = authentication.getName();
-        journalService.delete_byID(myId,userName);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        journalService.delete_byID(myId, userName);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<?> update(@Valid @PathVariable ObjectId id,
-                                    @RequestBody JournalEntries newEntry,
+    public ResponseEntity<?> update(@PathVariable String id,
+                                    @Valid @RequestBody JournalEntries newEntry,
                                     Authentication authentication) {
 
         String username = authentication.getName();
@@ -96,7 +96,7 @@ public class JournalEntryController {
                 entry.setContent(newEntry.getContent());
             }
 
-            journalService.updateEntry(entry);
+            JournalEntries updated = journalService.updateEntry(entry);
 
             return ResponseEntity.ok(entry);
         }

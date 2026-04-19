@@ -32,12 +32,18 @@ public class PublicController {
         return "Health OK";
     }
 
-    @PostMapping("/create-user")
-    public void Create_User(@Valid @RequestBody User entry) {
-        userService.createUser(entry);
+    @PostMapping("/signup") //For creating new user
+    public ResponseEntity<String> createUser(@Valid @RequestBody User entry) {
+        // FIX: was void — client had no idea if signup succeeded or failed
+        try {
+            userService.createUser(entry);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already taken");
+        }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login") //for logging in
     public ResponseEntity<?> login(@RequestBody User user) {
         try {
             authenticationManager.authenticate(

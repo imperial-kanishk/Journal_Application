@@ -7,13 +7,14 @@ import journalApp.Repository.JournalRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class JournalService {
 
     @Autowired
@@ -34,16 +35,16 @@ public class JournalService {
             userService.saveUser(user); //To Save the updated User
 
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred while saving ");
+            throw new RuntimeException("An error occurred while saving ",e);
         }
 
     }
-    public void updateEntry(JournalEntries journalEntry)
+    public JournalEntries updateEntry(JournalEntries journalEntry)
     {
 
         journalEntry.setDate(LocalDateTime.now());//To automatically set the date while giving entry
-        JournalEntries save = journalRepo.save(journalEntry); //Save to Journal Entries repo
-
+        JournalEntries saved = journalRepo.save(journalEntry); //Save to Journal Entries repo
+        return saved;
 
 
     }
@@ -51,11 +52,12 @@ public class JournalService {
     {
         return journalRepo.findAll();
     }
-    public Optional<JournalEntries> JournalEntries_byID(ObjectId Id){
+    public Optional<JournalEntries> JournalEntries_byID(String Id){
 
         return journalRepo.findById(Id);
     }
-    public void delete_byID(ObjectId id, String userName){
+    @Transactional
+    public void delete_byID(String id, String userName){
         User user = userService.findByUserName(userName); //User summoned so the entry can be deleted
         user.getJournalEntriesList().removeIf(x -> x.getId().equals(id));
         journalRepo.deleteById(id);
