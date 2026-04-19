@@ -18,9 +18,9 @@ public class JournalApplication {
         SpringApplication.run(JournalApplication.class, args);
     }
 
-    @Bean //Like a Translator between MongoDB database and Spring Boot
-    public PlatformTransactionManager add(MongoDatabaseFactory dbFactory){
-        return new MongoTransactionManager((dbFactory));
-    }
+//    @Bean //Like a Translator between MongoDB database and Spring Boot
+//    public PlatformTransactionManager add(MongoDatabaseFactory dbFactory){
+//        return new MongoTransactionManager((dbFactory));
+//    }
 
 }

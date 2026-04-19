@@ -15,7 +15,8 @@ public class JwtUtil {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String generateToken(String username) {
+    public String generateToken(String username) //for generating the JWT Token
+    {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -24,7 +25,8 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractUsername(String token) {
+    public String extractUsername(String token)
+    {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -33,7 +35,8 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    public boolean isTokenValid(String token) {
+    public boolean isTokenValid(String token) //for Checking the token
+    {
         try {
             extractUsername(token);
             return true;
