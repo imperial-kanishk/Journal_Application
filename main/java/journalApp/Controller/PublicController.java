@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,9 +34,15 @@ public class PublicController {
         return "Health OK";
     }
 
+//    @PostMapping("create-admin")
+//    public ResponseEntity<String> createAdmin(@RequestBody User entry) {
+//        entry.setRoles(new ArrayList<>(List.of("ADMIN")));
+//        userService.createUser(entry);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Admin created successfully");
+//    }
+
     @PostMapping("/signup") //For creating new user
     public ResponseEntity<String> createUser(@Valid @RequestBody User entry) {
-        // FIX: was void — client had no idea if signup succeeded or failed
         try {
             userService.createUser(entry);
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");

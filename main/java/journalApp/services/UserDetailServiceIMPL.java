@@ -22,14 +22,16 @@ public class UserDetailServiceIMPL implements UserDetailsService {
             throw new UsernameNotFoundException("User Not Found");
         }
 
+        // Fallback to USER if roles is null or empty in DB
+        String[] roles = (user.getRoles() != null && !user.getRoles().isEmpty())
+                ? user.getRoles().toArray(new String[0])
+                : new String[]{"USER"};
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                // Uncomment below when roles are properly set up:
-                // .authorities(user.getRoles().stream().map(r -> "ROLE_" + r).toList())
-                .roles(user.getRoles() != null
-                        ? user.getRoles().toArray(new String[0])
-                        : new String[]{"USER"})
+                .roles(roles)  // .roles() adds ROLE_ prefix automatically
+                // never call .authorities() and .roles() together
                 .build();
     }
 }

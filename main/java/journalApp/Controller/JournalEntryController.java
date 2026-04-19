@@ -2,17 +2,15 @@ package journalApp.Controller;
 
 import jakarta.validation.Valid;
 
-import journalApp.Entities.JournalEntries;
+import journalApp.Entities.JournalEntry;
 import journalApp.Entities.User;
 
 import journalApp.services.JournalService;
 import journalApp.services.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,22 +27,19 @@ public class JournalEntryController {
 
     @GetMapping
     public ResponseEntity<?> getJournalEntriesByUserName(Authentication authentication){
-
         String userName = authentication.getName();
 
-
         User byUserName = userService.findByUserName(userName); //Finds User
-        List<JournalEntries> all = byUserName.getJournalEntriesList(); //Make a List of Journal Entries of that User found
+        List<JournalEntry> all = byUserName.getJournalEntryList(); //Make a List of Journal Entries of that User found
         if (all != null &&  !all.isEmpty()){
             return new ResponseEntity<>(all,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
     @PostMapping
-    public  ResponseEntity<JournalEntries> CreateEntries(@Valid @RequestBody JournalEntries my_entry,
-                                                         Authentication authentication){
+    public  ResponseEntity<JournalEntry> CreateEntries(@Valid @RequestBody JournalEntry my_entry,
+                                                       Authentication authentication){
 
         try{
             String userName = authentication.getName();
@@ -76,17 +71,17 @@ public class JournalEntryController {
 
     @PutMapping("/id/{id}")
     public ResponseEntity<?> update(@PathVariable String id,
-                                    @Valid @RequestBody JournalEntries newEntry,
+                                    @Valid @RequestBody JournalEntry newEntry,
                                     Authentication authentication) {
 
         String username = authentication.getName();
         User user = userService.findByUserName(username);
 
-        Optional<JournalEntries> entryOpt = journalService.JournalEntries_byID(id);
+        Optional<JournalEntry> entryOpt = journalService.JournalEntries_byID(id);
 
-        if (entryOpt.isPresent() && user.getJournalEntriesList().contains(entryOpt.get())) {
+        if (entryOpt.isPresent() && user.getJournalEntryList().contains(entryOpt.get())) {
 
-            JournalEntries entry = entryOpt.get();
+            JournalEntry entry = entryOpt.get();
 
             if (newEntry.getTitle() != null && !newEntry.getTitle().isBlank()) {
                 entry.setTitle(newEntry.getTitle());
@@ -96,7 +91,7 @@ public class JournalEntryController {
                 entry.setContent(newEntry.getContent());
             }
 
-            JournalEntries updated = journalService.updateEntry(entry);
+            JournalEntry updated = journalService.updateEntry(entry);
 
             return ResponseEntity.ok(entry);
         }

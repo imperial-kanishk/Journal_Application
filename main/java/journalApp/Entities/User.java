@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @DBRef //To link journal entries to users and make it a child of Users
-    private List<JournalEntries> journalEntriesList = new ArrayList<>(); //List of Journal Entries for User
+    private List<JournalEntry> journalEntryList = new ArrayList<>(); //List of Journal Entries for User
 
     private List<String> roles;
 }

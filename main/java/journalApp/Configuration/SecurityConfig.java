@@ -30,7 +30,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/health-check",
+                                "/public/signup",
+                                "/public/login").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/journal/**", "/user/**").authenticated()
                         .anyRequest().authenticated()
                 )

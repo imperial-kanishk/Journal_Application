@@ -1,12 +1,10 @@
 package journalApp.services;
 
 
-import journalApp.Entities.JournalEntries;
+import journalApp.Entities.JournalEntry;
 import journalApp.Entities.User;
 import journalApp.Repository.JournalRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,14 +21,14 @@ public class JournalService {
     private UserService userService;
 
     @Transactional
-    public void saveEntry(JournalEntries journalEntry, String userName)
+    public void saveEntry(JournalEntry journalEntry, String userName)
     {
         try {
             User user = userService.findByUserName(userName);
 
             journalEntry.setDate(LocalDateTime.now());//To automatically set the date while giving entry
-            JournalEntries save = journalRepo.save(journalEntry); //New Saved Journal entry
-            user.getJournalEntriesList().add(save); //Add to list of journal entries of the User
+            JournalEntry save = journalRepo.save(journalEntry); //New Saved Journal entry
+            user.getJournalEntryList().add(save); //Add to list of journal entries of the User
             //user.setUsername(null);
             userService.saveUser(user); //To Save the updated User
 
@@ -39,27 +37,27 @@ public class JournalService {
         }
 
     }
-    public JournalEntries updateEntry(JournalEntries journalEntry)
+    public JournalEntry updateEntry(JournalEntry journalEntry)
     {
 
         journalEntry.setDate(LocalDateTime.now());//To automatically set the date while giving entry
-        JournalEntries saved = journalRepo.save(journalEntry); //Save to Journal Entries repo
+        JournalEntry saved = journalRepo.save(journalEntry); //Save to Journal Entries repo
         return saved;
 
 
     }
-    public List<JournalEntries> getAll() //To get data through the repository for GET
+    public List<JournalEntry> getAll() //To get data through the repository for GET
     {
         return journalRepo.findAll();
     }
-    public Optional<JournalEntries> JournalEntries_byID(String Id){
+    public Optional<JournalEntry> JournalEntries_byID(String Id){
 
         return journalRepo.findById(Id);
     }
     @Transactional
     public void delete_byID(String id, String userName){
         User user = userService.findByUserName(userName); //User summoned so the entry can be deleted
-        user.getJournalEntriesList().removeIf(x -> x.getId().equals(id));
+        user.getJournalEntryList().removeIf(x -> x.getId().equals(id));
         journalRepo.deleteById(id);
         userService.saveUser(user); //User modified
     }
